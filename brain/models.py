@@ -10,7 +10,7 @@ class Admin(models.Model):
 	cpf = models.CharField(max_length = 45,primary_key = True)
 	nome = models.CharField(max_length = 45)
 	contato = models.CharField(max_length = 45)
-	cnpj_clinica = models.ForeignKey(cnpj_clinica, on_delete=models.CASCADE)
+	cnpj_clinica = models.ForeignKey(Clinica, on_delete=models.CASCADE)
 
 class Paciente(models.Model):
 	cpf = models.CharField(max_length = 45, primary_key = True)
@@ -21,8 +21,8 @@ class Profissional(models.Model):
 	cpf = models.CharField(max_length = 45, primary_key = True)
 	nome = models.CharField(max_length = 45)
 	contato = models.CharField(max_length = 45)
-	cnpj_clinica = models.ForeignKey(cnpj_clinica, on_delete=models.CASCADE)
+	cnpj_clinica = models.ForeignKey(Clinica, on_delete=models.CASCADE)
 
 class Trabalha_Em(models.Model):
-	cnpj_clinica = models.ForeignKey(cnpj_clinica, on_delete=models.CASCADE)
-	cpf_profissional = models.ForeignKey(cpf_profissional, on_delete=models.CASCADE)
+	cnpj_clinica = models.ForeignKey(Clinica, on_delete=models.CASCADE)
+	cpf_profissional = models.ForeignKey(Profissional, on_delete=models.CASCADE)
