@@ -5,7 +5,7 @@ from .models import Admin
 from .models import Paciente
 from .models import Profissional
 
-class Clinica_Form(forms.ModelForm):
+class Clinica_Form(ModelForm):
     class Meta:
         model = Clinica
         fields = [
@@ -16,7 +16,7 @@ class Clinica_Form(forms.ModelForm):
         ]
 
 
-class Admin_Form(forms.ModelForm):
+class Admin_Form(ModelForm):
     class Meta:
         model = Admin
         fields = [
@@ -27,7 +27,7 @@ class Admin_Form(forms.ModelForm):
         ]
 
 
-class Paciente_Form(forms.ModelForm):
+class Paciente_Form(ModelForm):
     class Meta:
         model = Paciente
         fields = [
@@ -37,7 +37,7 @@ class Paciente_Form(forms.ModelForm):
         ]
 
 
-class Profissional_Form(forms.ModelForm):
+class Profissional_Form(ModelForm):
     class Meta:
         model = Profissional
         fields = [

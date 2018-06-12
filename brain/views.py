@@ -1,7 +1,5 @@
 from django.shortcuts import render
-from django.shortcuts import request
 
-<<<<<<< HEAD
 from .models import Clinica
 from .models import Admin
 from .models import Paciente
@@ -28,7 +26,7 @@ def create_clinica(request):
     if (form.is_valid()):
         form.save()
         return redirect("list-clinica")
-    
+
     return render(request, "new-clinica.html", {'form':form})
 
 
@@ -44,13 +42,13 @@ def update_clinica(request, id):
     if (form.is_valid()):
         form.save()
         return redirect("list-clinica")
-    
+
     return render(request, "list-clinica.html", {'clinica':clinica, 'form':form})
 
 
 def delete_clinica(request, id):
     clinica = Clinica.objects.get(id=id)
-    
+
     if (request.method == 'POST'):
         clinica.delete()
         return redirect('list-clinica')
@@ -66,7 +64,7 @@ def create_admin(request):
     if (form.is_valid()):
         form.save()
         return redirect("list-admin")
-    
+
     return render(request, "new-admin.html", {'form':form})
 
 
@@ -82,7 +80,7 @@ def update_admin(request, id):
     if (form.is_valid()):
         form.save()
         return redirect("list-admin")
-    
+
     return render(request, "list-admin.html", {'admin':admin, 'form':form})
 
 
@@ -92,7 +90,7 @@ def delete_admin(request, id):
     if (request.method == 'POST'):
         admin.delete()
         return redirect("list-admin")
-    
+
     return render(request, "delete-admin.html", {'admin':admin})
 
 
@@ -104,7 +102,7 @@ def create_paciente(request):
     if (form.is_valid()):
         form.save()
         return redirect("list-paciente")
-    
+
     return render(request, "new-paciente.html", {'form':form})
 
 
@@ -114,7 +112,7 @@ def read_paciente(request):
 
 
 def update_paciente(request, id):
-    paciente = Paciente.objects.get(id=id):
+    paciente = Paciente.objects.get(id=id)
     form = Paciente_Form(request.POST or None, instance=paciente)
 
     if (form.is_valid()):
@@ -130,7 +128,7 @@ def delete_paciente(request, id):
     if (request.method == 'POST'):
         paciente.delete()
         return redirect("list-paciente")
-    
+
     return render(request, "delete-paciente.html", {'paciente':paciente})
 
 
@@ -170,7 +168,6 @@ def delete_profissional(request, id):
         return redirect("list-profissional")
 
     return render(request, "delete-profissional.html", {'profissional':profissional})
-=======
+
 def login(request):
     return render(request, 'login.html')
->>>>>>> df0fd2a1818eaa9497bcc897b9701a2ec1eaf99d
