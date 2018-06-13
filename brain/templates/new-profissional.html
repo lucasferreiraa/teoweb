@@ -1,0 +1,54 @@
+{% extends "base_log.html" %}
+{% block base %}
+
+<div class="login">
+
+    <!-- Register -->
+    <div class="login__block active" id="l-register">
+        <div class="login__block__header palette-Blue bg">
+            <h3>TEO</h3>
+            Criar Conta
+
+            <div class="actions actions--inverse login__block__actions">
+                <div class="dropdown">
+                    <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" data-ma-target="#l-login" href="{% url 'login' %}">Já tem uma conta?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login__block__body">
+          <form method="post" action="">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="form-group form-group--float form-group--centered">
+                <input type="text" class="form-control" name="{{field.name}}">
+
+                {% if field.name == "cpf" %}
+                <label>{{field.name|upper}}</label>
+                {% else %}
+                <label>{{field.name|capfirst}}</label>
+                {% endif %}
+
+                <i class="form-group__bar"></i>
+            </div>
+            {% endfor %}
+
+            <div class="form-group">
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Ao cadastrar, aceito os termos de licença</span>
+                </label>
+            </div>
+
+            <button href="index.html" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
+          </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

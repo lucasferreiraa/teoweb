@@ -44,5 +44,6 @@ class Profissional_Form(ModelForm):
             'cpf',
             'nome',
             'contato',
+            'especialidade',
             'cnpj_clinica',
         ]

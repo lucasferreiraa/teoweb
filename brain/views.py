@@ -137,11 +137,16 @@ def delete_paciente(request, id):
 def create_profissional(request):
     form = Profissional_Form(request.POST or None)
 
+    is_valid = False
+
     if (form.is_valid()):
         form.save()
-        return redirect("list-profissional")
+        is_valid = True
+        #return redirect("login")
 
-    return render(request, "new-profissional.html", {'form':form})
+    context = {'form': form, 'is_valid': is_valid}
+
+    return render(request, "new-profissional.html", context)
 
 
 def read_profissional(request):
