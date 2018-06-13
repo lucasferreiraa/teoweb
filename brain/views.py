@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
 
 from .models import Clinica
 from .models import Admin
@@ -136,16 +137,14 @@ def delete_paciente(request, id):
 
 def create_profissional(request):
     form = Profissional_Form(request.POST or None)
-
     is_valid = False
 
     if (form.is_valid()):
         form.save()
         is_valid = True
-        #return redirect("login")
+        return redirect("login")
 
     context = {'form': form, 'is_valid': is_valid}
-
     return render(request, "new-profissional.html", context)
 
 

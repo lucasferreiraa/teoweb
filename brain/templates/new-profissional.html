@@ -21,7 +21,7 @@
         </div>
 
         <div class="login__block__body">
-          <form method="post" action="">
+          <form method="post">
             {% csrf_token %}
 
             {% for field in form %}
@@ -46,9 +46,10 @@
                 </label>
             </div>
 
-            <button href="index.html" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
+            <button class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
           </form>
         </div>
     </div>
 </div>
+
 {% endblock %}
