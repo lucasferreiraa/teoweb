@@ -7,7 +7,7 @@
     <div class="login__block active" id="l-register">
         <div class="login__block__header palette-Blue bg">
             <h3>TEO</h3>
-            Criar Conta
+            Cadastrar Clínica
 
             <div class="actions actions--inverse login__block__actions">
                 <div class="dropdown">
@@ -27,13 +27,8 @@
             {% for field in form %}
             <div class="form-group form-group--float form-group--centered">
 
-                {% if field.name == "cpf" %}
-                <input id="{{field.id_for_label}}" type="text" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}" required maxlength="11">
-                <label>{{ field.name|upper }}</label>
-                {% else %}
                 <input id="{{field.id_for_label}}" type="text" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}" required>
                 <label>{{field.name|capfirst}}</label>
-                {% endif %}
 
                 <i class="form-group__bar"></i>
             </div>

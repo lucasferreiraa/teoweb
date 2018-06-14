@@ -1,0 +1,69 @@
+{% extends "base_log.html" %}
+{% block base %}
+
+<main class="main">
+            <div class="page-loader">
+                <div class="page-loader__spinner">
+                    <svg viewBox="25 25 50 50">
+                        <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+                    </svg>
+                </div>
+            </div>
+
+            <header class="header">
+                <div class="navigation-trigger hidden-xl-up" data-ma-action="aside-open" data-ma-target=".sidebar">
+                    <div class="navigation-trigger__inner">
+                        <i class="navigation-trigger__line"></i>
+                        <i class="navigation-trigger__line"></i>
+                        <i class="navigation-trigger__line"></i>
+                    </div>
+                </div>
+
+                <div class="header__logo hidden-sm-down">
+                    <h1 style="color: white; font-family: purisa; font-size: 2.5rem;">TEO</h1>
+                </div>
+                <ul class="top-nav">
+
+                        <li class="dropdown hidden-xs-down">
+                            <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+
+                                <a href="{% url 'new-clinica' %}" class="dropdown-item">Voltar</a>
+                            </div>
+                        </li>
+                </ul>
+
+            </header>
+              <section class="content">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Clínicas</h4>
+
+                        <table class="table mb-0">
+                            <thead>
+                            <tr>
+                                <th>CNPJ</th>
+                                <th>Nome</th>
+                                <th>Endereço</th>
+                                <th>Contato</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for clinica in clinicas %}
+                            <tr>
+                                <td>{{clinica.cnpj}}</td>
+                                <td>{{clinica.nome}}</td>
+                                <td>{{clinica.endereco}}</td>
+                                <td>{{clinica.contato}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+{% endblock %}

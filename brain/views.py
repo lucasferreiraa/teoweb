@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-
+from django.shortcuts import render, redirect, render_to_response
+from django.http import HttpResponse
 
 from .models import Clinica
 from .models import Admin
@@ -33,8 +33,9 @@ def create_clinica(request):
 
 
 def read_clinica(request):
-    clinica = Clinica.objects.all()
-    return render(request, "list-clinica.html", {'clinica':clinica})
+    clinicas = Clinica.objects.all()
+    linha = True
+    return render(request, "list-clinica.html", {'clinicas':clinicas, 'linha': linha})
 
 
 def update_clinica(request, id):
@@ -137,16 +138,14 @@ def delete_paciente(request, id):
 # CRUD Profissional
 
 def create_profissional(request):
+
     form = Profissional_Form(request.POST or None)
-    is_valid = False
 
     if (form.is_valid()):
         form.save()
-        is_valid = True
         return redirect("login")
 
-    context = {'form': form, 'is_valid': is_valid}
-    return render(request, "new-profissional.html", context)
+    return render(request, "new-profissional.html", {'form': form})
 
 
 def read_profissional(request):

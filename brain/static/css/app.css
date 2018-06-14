@@ -320,7 +320,11 @@ h1, h2, h3, h4, h5, h6,
   color: #333; }
 
 h1, .h1 {
-  font-size: 2.5rem; }
+  font-size: 2.5rem;
+  color: #FFFFFF;
+  font-family: purisa;
+  font-weight: 800;
+}
 
 h2, .h2 {
   font-size: 2rem; }
