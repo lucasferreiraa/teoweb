@@ -21,13 +21,13 @@
         </div>
 
         <div class="login__block__body">
-          <form method="post">
+          <form method="post" action="javascript:void(0)" name="form" id="form">
             {% csrf_token %}
 
             {% for field in form %}
             <div class="form-group form-group--float form-group--centered">
 
-                <input id="{{field.id_for_label}}" type="text" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}" required>
+                <input id="{{field.id_for_label}}" type="text" class="form-control" name="{{field.name}}">
                 <label>{{field.name|capfirst}}</label>
 
                 <i class="form-group__bar"></i>
@@ -42,11 +42,52 @@
                 </label>
             </div>
 
-            <button class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
-            <!--<button onclick="cads()" class="btn btn--icon login__block__btn" id="alerta"><i class="zmdi zmdi-check"></i></button>-->
+            <button onclick="cadastrar({{cnpjs}})" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
           </form>
         </div>
     </div>
 </div>
+
+<script>
+  function cadastrar(cnpjs){
+
+    cnpj = document.getElementById('id_cnpj').value;
+    nome = document.getElementById('id_nome').value;
+    endereco = document.getElementById('id_endereco').value;
+    contato = document.getElementById('id_contato').value;
+
+    if(cnpj != "" && nome != "" && endereco != "" && contato != ""){
+      cnpj_valido = true;
+
+      if(cnpjs.indexOf(cnpj) != -1){
+        cnpj_valido = false;
+        notify("bottom", "center", "fa fa-check", "info", "animated fadeIn", "animated fadeOut", "Erro - ", "Este CNPJ já está cadastrado");
+      }
+
+      if(cnpj_valido)
+        cadastroValido(nome);
+    }
+
+    else{
+      document.form.action = "javascript:void(0)";
+      notify("bottom", "center", "fa fa-check", "info", "animated fadeIn", "animated fadeOut", "Erro - ", "Preencha todos os campos");
+    }
+
+  }
+
+  function cadastroValido(cli){
+      swal({
+          title: 'Sucesso',
+          text: "Clínica " + cli + ' cadastrada!',
+          type: 'success',
+          buttonsStyling: false,
+          confirmButtonClass: 'btn btn-primary',
+
+      }).then(function(){
+          document.form.action = "";
+          document.form.submit();
+      });
+  };
+</script>
 
 {% endblock %}
