@@ -56,6 +56,8 @@
                                 <td>{{clinica.nome}}</td>
                                 <td>{{clinica.endereco}}</td>
                                 <td>{{clinica.contato}}</td>
+                                <td><a class="nav-link active" href="{% url 'update-clinica' clinica.cnpj %}">Atualizar</a></td>
+                                <td><a class="nav-link active" href="{% url 'delete-clinica' clinica.cnpj %}">Deletar</a></td>
                             </tr>
                             {% endfor %}
                             </tbody>
