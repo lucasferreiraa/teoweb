@@ -25,10 +25,7 @@ se vai ficar visível para o cliente.
 def create_clinica(request):
     form = Clinica_Form(request.POST or None)
     clinicas = list(Clinica.objects.all())
-    cnpjs = []
-
-    for c in clinicas:
-        cnpjs.append(c.cnpj)
+    cnpjs = [c.cnpj for c in clinicas]
 
     if (form.is_valid()):
         form.save()
@@ -40,23 +37,26 @@ def create_clinica(request):
 
 def read_clinica(request):
     clinicas = Clinica.objects.all()
-    linha = True
-    return render(request, "list-clinica.html", {'clinicas':clinicas, 'linha': linha})
+    return render(request, "list-clinica.html", {'clinicas': clinicas})
 
 
-def update_clinica(request, id):
-    clinica = Clinica.objects.get(id=id)
+def update_clinica(request, cnpj):
+    clinica = Clinica.objects.get(cnpj=cnpj)
     form = Clinica_Form(request.POST or None, instance=clinica)
+    clinicas = list(Clinica.objects.all())
+    cnpjs = [c.cnpj for c in clinicas]
 
     if (form.is_valid()):
+        Clinica.objects.get(cnpj=cnpj).delete()
         form.save()
         return redirect("list-clinica")
 
-    return render(request, "list-clinica.html", {'clinica':clinica, 'form':form})
+    context = {'form': form, 'cnpjs': cnpjs, 'clinica': clinica, 'cnpj': cnpj}
+    return render(request, "new-clinica.html", context)
 
 
-def delete_clinica(request, id):
-    clinica = Clinica.objects.get(id=id)
+def delete_clinica(request, cnpj):
+    clinica = Clinica.objects.get(cnpj=cnpj)
 
     if (request.method == 'POST'):
         clinica.delete()
@@ -148,22 +148,14 @@ def create_profissional(request):
     form = Profissional_Form(request.POST or None)
     profissionais = list(Profissional.objects.all())
     clinicas = list(Clinica.objects.all())
-
-    cpfs = []
-    cnpjs = []
-
-    for p in profissionais:
-        cpfs.append(p.cpf)
-
-    for c in clinicas:
-        cnpjs.append(c.cnpj)
+    cpfs = [p.cpf for p in profissionais]
+    cnpjs = [c.cnpj for c in clinicas]
 
     if form.is_valid():
         form.save()
         return redirect("login")
 
     context = {'form': form, 'cpfs': cpfs, 'cnpjs': cnpjs}
-
     return render(request, "new-profissional.html", context)
 
 

@@ -7,14 +7,18 @@
     <div class="login__block active" id="l-register">
         <div class="login__block__header palette-Blue bg">
             <h3>TEO</h3>
+            {% if clinica %}
+            Atualizar Clínica
+            {% else %}
             Cadastrar Clínica
+            {% endif %}
 
             <div class="actions actions--inverse login__block__actions">
                 <div class="dropdown">
                     <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
 
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" data-ma-target="#l-login" href="{% url 'login' %}">Já tem uma conta?</a>
+                        <a class="dropdown-item" data-ma-target="#l-login" href="{% url 'login' %}">Já tem uma clínica?</a>
                     </div>
                 </div>
             </div>
@@ -27,7 +31,7 @@
             {% for field in form %}
             <div class="form-group form-group--float form-group--centered">
 
-                <input id="{{field.id_for_label}}" type="text" class="form-control" name="{{field.name}}">
+                <input id="{{field.id_for_label}}" type="text" value="{{field.value|default_if_none:''}}" class="form-control" name="{{field.name}}">
                 <label>{{field.name|capfirst}}</label>
 
                 <i class="form-group__bar"></i>
@@ -42,7 +46,11 @@
                 </label>
             </div>
 
+            {% if clinica %}
+            <button onclick="atualizar({{cnpjs}}, {{cnpj}})" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
+            {% else %}
             <button onclick="cadastrar({{cnpjs}})" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
+            {% endif %}
           </form>
         </div>
     </div>
@@ -75,10 +83,50 @@
 
   }
 
+  function atualizar(cnpjs, c){
+
+    cnpj = document.getElementById('id_cnpj').value;
+    nome = document.getElementById('id_nome').value;
+    endereco = document.getElementById('id_endereco').value;
+    contato = document.getElementById('id_contato').value;
+
+    if(cnpj != "" && nome != "" && endereco != "" && contato != ""){
+      cnpj_valido = true;
+
+      if(cnpjs.indexOf(cnpj) != -1 && cnpj != c){
+        cnpj_valido = false;
+        notify("bottom", "center", "fa fa-check", "info", "animated fadeIn", "animated fadeOut", "Erro - ", "Este CNPJ já está cadastrado");
+      }
+
+      if(cnpj_valido)
+        atualizacaoValida(nome);
+    }
+
+    else{
+      document.form.action = "javascript:void(0)";
+      notify("bottom", "center", "fa fa-check", "info", "animated fadeIn", "animated fadeOut", "Erro - ", "Preencha todos os campos");
+    }
+
+  }
+
   function cadastroValido(cli){
       swal({
           title: 'Sucesso',
           text: "Clínica " + cli + ' cadastrada!',
+          type: 'success',
+          buttonsStyling: false,
+          confirmButtonClass: 'btn btn-primary',
+
+      }).then(function(){
+          document.form.action = "";
+          document.form.submit();
+      });
+  };
+
+  function atualizacaoValida(cli){
+      swal({
+          title: 'Sucesso',
+          text: "Clínica " + cli + ' atualizada!',
           type: 'success',
           buttonsStyling: false,
           confirmButtonClass: 'btn btn-primary',
