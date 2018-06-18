@@ -5,8 +5,8 @@ from . import views
 urlpatterns = [
     path('cadastrar-clinica', views.create_clinica, name='new-clinica'),
     path('clinicas', views.read_clinica, name='list-clinica'),
-    path('atualizar-clinica/<int:id>/', views.update_clinica, name='update-clinica'),
-    path('excluir-clinica/<int:id>/', views.delete_clinica, name='delete-clinica'),
+    path('atualizar-clinica/<cnpj>/', views.update_clinica, name='update-clinica'),
+    path('excluir-clinica/<cnpj>/', views.delete_clinica, name='delete-clinica'),
 
     path('cadastrar-admin', views.create_admin, name='new-admin'),
     path('admins', views.read_admin, name='list-admin'),
