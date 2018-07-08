@@ -1,0 +1,47 @@
+{% extends "base_login.html" %}
+{% block base-log %}
+
+<div class="login">
+
+    <!-- Login -->
+    <div class="login__block active" id="l-login">
+        <div class="login__block__header">
+          <h3>TEO</h3>
+            Tela de Login
+
+            <div class="actions actions--inverse login__block__actions">
+                <div class="dropdown">
+                    <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" data-ma-target="#l-register" href="{% url 'register' %}">Criar conta</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" name="form" id="form">
+        {% csrf_token %}
+        <div class="login__block__body">
+            {{form.non_field_errors}}
+
+            {% for field in form %}
+            <div class="form-group form-group--float form-group--centered">
+                {% if field.name == "password" %}
+                <input id="{{field.id_for_label}}" value="{{field.value|default_if_none:''}}" type="password" class="form-control" name="{{field.name}}">
+                {% else %}
+                <input id="{{field.id_for_label}}" value="{{field.value|default_if_none:''}}" type="text" class="form-control" name="{{field.name}}">
+                {% endif %}
+                <label>{{field.name|capfirst}}</label>
+                <i class="form-group__bar"></i>
+                {{field.errors}}
+            </div>
+            {% endfor %}
+
+            <button href="index.html" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-long-arrow-right"></i></button>
+        </div>
+      </form>
+
+    </div>
+</div>
+{% endblock %}

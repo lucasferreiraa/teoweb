@@ -1,5 +1,4 @@
 from django.urls import path
-
 from . import views
 
 urlpatterns = [
@@ -23,5 +22,6 @@ urlpatterns = [
     path('atualizar-profissional/<int:id>/', views.update_profissional, name='update-profissional'),
     path('excluir-paciente/<int:id>/', views.delete_profissional, name='delete-profissional'),
 
-    path('', views.login, name='login'),
+    path('', views.index, name='index'),
+    path('logout/', views.my_logout, name='logout'),
 ]

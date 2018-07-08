@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.conf import settings
 
 from .models import Clinica
 from .models import Admin
@@ -22,6 +25,7 @@ se vai ficar visível para o cliente.
 '''
 
 # CRUD Clinica
+@login_required
 def create_clinica(request):
     form = Clinica_Form(request.POST or None)
     clinicas = list(Clinica.objects.all())
@@ -34,12 +38,12 @@ def create_clinica(request):
     context = {'form': form, 'cnpjs': cnpjs}
     return render(request, "new-clinica.html", context)
 
-
+@login_required
 def read_clinica(request):
     clinicas = Clinica.objects.all()
     return render(request, "list-clinica.html", {'clinicas': clinicas})
 
-
+@login_required
 def update_clinica(request, cnpj):
     clinica = Clinica.objects.get(cnpj=cnpj)
     form = Clinica_Form(request.POST or None, instance=clinica)
@@ -54,7 +58,7 @@ def update_clinica(request, cnpj):
     context = {'form': form, 'cnpjs': cnpjs, 'clinica': clinica, 'cnpj': cnpj}
     return render(request, "new-clinica.html", context)
 
-
+@login_required
 def delete_clinica(request, cnpj):
     clinica = Clinica.objects.get(cnpj=cnpj)
 
@@ -66,7 +70,7 @@ def delete_clinica(request, cnpj):
 
 
 # CRUD Admin
-
+@login_required
 def create_admin(request):
     form = Admin_Form(request.POST or None)
 
@@ -76,12 +80,12 @@ def create_admin(request):
 
     return render(request, "new-admin.html", {'form':form})
 
-
+@login_required
 def read_admin(request):
     admin = Admin.objects.all()
     return render(request, "list-admin.html")
 
-
+@login_required
 def update_admin(request, id):
     admin = Admin.objects.get(id=id)
     form = Admin_Form(request.POST or None, instance=admin)
@@ -92,7 +96,7 @@ def update_admin(request, id):
 
     return render(request, "list-admin.html", {'admin':admin, 'form':form})
 
-
+@login_required
 def delete_admin(request, id):
     admin = Admin.objects.get(id=id)
 
@@ -104,7 +108,7 @@ def delete_admin(request, id):
 
 
 # CRUD Paciente
-
+@login_required
 def create_paciente(request):
     form = Paciente_Form(request.POST or None)
 
@@ -114,12 +118,12 @@ def create_paciente(request):
 
     return render(request, "new-paciente.html", {'form':form})
 
-
+@login_required
 def read_paciente(request):
     paciente = Paciente.objects.all()
     return render(request, "list-paciente.html")
 
-
+@login_required
 def update_paciente(request, id):
     paciente = Paciente.objects.get(id=id)
     form = Paciente_Form(request.POST or None, instance=paciente)
@@ -130,7 +134,7 @@ def update_paciente(request, id):
 
     return render(request, "list-paciente.html", {'paciente':paciente, 'form':form})
 
-
+@login_required
 def delete_paciente(request, id):
     paciente = Paciente.objects.get(id=id)
 
@@ -142,7 +146,7 @@ def delete_paciente(request, id):
 
 
 # CRUD Profissional
-
+@login_required
 def create_profissional(request):
 
     form = Profissional_Form(request.POST or None)
@@ -158,12 +162,12 @@ def create_profissional(request):
     context = {'form': form, 'cpfs': cpfs, 'cnpjs': cnpjs}
     return render(request, "new-profissional.html", context)
 
-
+@login_required
 def read_profissional(request):
     profissional = Profissional.objects.all()
     return render(request, "list-profissional.html", {'profissional':profissional})
 
-
+@login_required
 def update_profissional(request, id):
     profissional = Profissional.objects.get(id=id)
     form = Profissional_Form(request.POST or None, instance=profissional)
@@ -174,7 +178,7 @@ def update_profissional(request, id):
 
     return render(request, "list-profissional.html", {'profissional':profissional, 'form':form})
 
-
+@login_required
 def delete_profissional(request, id):
     profissional = Profissional.objects.get(id=id)
 
@@ -184,5 +188,10 @@ def delete_profissional(request, id):
 
     return render(request, "delete-profissional.html", {'profissional':profissional})
 
-def login(request):
-    return render(request, 'login.html')
+@login_required
+def index(request):
+    return render(request, 'index.html')
+
+def my_logout(request):
+    logout(request)
+    return redirect(settings.LOGOUT_URL)

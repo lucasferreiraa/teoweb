@@ -1,0 +1,108 @@
+{% extends "base_log.html" %}
+{% block base %}
+
+<div class="login">
+
+    <!-- Register -->
+    <div class="login__block active" id="l-register">
+        <div class="login__block__header palette-Blue bg">
+            <h3>TEO</h3>
+            Criar Conta
+
+            <div class="actions actions--inverse login__block__actions">
+                <div class="dropdown">
+                    <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" data-ma-target="#l-login" href="{% url 'login' %}">Já tem uma conta?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login__block__body">
+          <form method="post" name="form" id="form">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="form-group form-group--float form-group--centered">
+                {% if field.name == "password1" or field.name == "password2" %}
+                <input id="{{field.id_for_label}}" type="password" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}" maxlength="11">
+                {% else %}
+                <input id="{{field.id_for_label}}" type="text" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}" >
+                {% endif %}
+
+                <label>{{field.name|capfirst}}</label>
+                <i class="form-group__bar"></i>
+                {{field.errors}}
+            </div>
+            {% endfor %}
+
+
+            <div class="form-group">
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Ao cadastrar, aceito os termos de licença</span>
+                </label>
+            </div>
+            <button onclick="cadastrar({{cpfs}}, {{cnpjs}})" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
+          </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+      function mudarAcao(){
+        document.form.action = "";
+      }
+
+      function cadastrar(cpfs, cnpjs){
+
+          cpf = document.getElementById('id_cpf').value;
+          nome = document.getElementById('id_nome').value;
+          contato = document.getElementById('id_contato').value;
+          especialidade = document.getElementById('id_especialidade').value;
+          cnpj_clinica = document.getElementById('id_cnpj_clinica').value;
+
+          if(cpf != "" && nome != "" && contato != "" && especialidade != "" && cnpj_clinica != ""){
+
+              cpf_valido = true;
+              cnpj_valido = true;
+
+              if(cpfs.indexOf(cpf) != -1){
+                notify("bottom", "center", "fa fa-check", "info", "animated fadeIn", "animated fadeOut", "Erro - ", "Este CPF já foi cadastrado");
+                cpf_valido = false;
+              }
+              if(cnpjs.indexOf(cnpj_clinica) == -1){
+                notify("bottom", "center", "fa fa-check", "info", "animated fadeIn", "animated fadeOut", "Erro - ", "Este CNPJ não está cadastrado");
+                cnpj_valido = false;
+              }
+
+              if(cpf_valido && cnpj_valido)
+                cadastroValido(nome);
+            }
+
+          else{
+              document.form.action = "javascript:void(0)";
+              notify("bottom", "center", "fa fa-check", "info", "animated fadeIn", "animated fadeOut", "Erro - ", "Preencha todos os campos");
+          }
+      }
+
+      function cadastroValido(usu){
+          swal({
+              title: 'Sucesso',
+              text: usu + ' cadastrado!',
+              type: 'success',
+              buttonsStyling: false,
+              confirmButtonClass: 'btn btn-primary',
+
+          }).then(function(){
+              document.form.action = "";
+              document.form.submit();
+          });
+      };
+</script>
+
+{% endblock %}
