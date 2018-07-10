@@ -23,5 +23,6 @@ urlpatterns = [
     path('excluir-paciente/<int:id>/', views.delete_profissional, name='delete-profissional'),
 
     path('', views.index, name='index'),
+    path('editar_conta/', views.edit_account, name='edit_account'),
     path('logout/', views.my_logout, name='logout'),
 ]

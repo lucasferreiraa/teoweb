@@ -13,6 +13,7 @@ from .forms import Clinica_Form
 from .forms import Admin_Form
 from .forms import Paciente_Form
 from .forms import Profissional_Form
+from accounts.forms import EditAccountForm
 
 '''
 Atualizando branch
@@ -191,6 +192,17 @@ def delete_profissional(request, id):
 @login_required
 def index(request):
     return render(request, 'index.html')
+
+@login_required
+def edit_account(request):
+    form = EditAccountForm(request.POST or None, instance=request.user)
+
+    if form.is_valid():
+        form.save()
+        return redirect('index')
+
+    context = {'form': form}
+    return render(request, 'edit_account.html', context)
 
 def my_logout(request):
     logout(request)
