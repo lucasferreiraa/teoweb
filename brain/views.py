@@ -13,6 +13,7 @@ from .forms import Clinica_Form
 from .forms import Admin_Form
 from .forms import Paciente_Form
 from .forms import Profissional_Form
+from accounts.forms import EditAccountForm
 
 '''
 Atualizando branch
@@ -157,30 +158,36 @@ def create_profissional(request):
 
     if form.is_valid():
         form.save()
-        return redirect("login")
+        return redirect("index")
 
     context = {'form': form, 'cpfs': cpfs, 'cnpjs': cnpjs}
     return render(request, "new-profissional.html", context)
 
 @login_required
 def read_profissional(request):
-    profissional = Profissional.objects.all()
-    return render(request, "list-profissional.html", {'profissional':profissional})
+    profissionais = Profissional.objects.all()
+    return render(request, "list-profissional.html", {'profissionais': profissionais})
 
 @login_required
-def update_profissional(request, id):
-    profissional = Profissional.objects.get(id=id)
+def update_profissional(request, cpf):
+    profissional = Profissional.objects.get(cpf=cpf)
     form = Profissional_Form(request.POST or None, instance=profissional)
+    profissionais = list(Profissional.objects.all())
+    clinicas = list(Clinica.objects.all())
+    cpfs = [p.cpf for p in profissionais]
+    cnpjs = [c.cnpj for c in clinicas]
 
     if (form.is_valid()):
+        Profissional.objects.get(cpf=cpf).delete()
         form.save()
         return redirect("list-profissional")
 
-    return render(request, "list-profissional.html", {'profissional':profissional, 'form':form})
+    context = {'profissional':profissional, 'form':form, 'cpfs': cpfs, 'cpf': cpf, 'cnpjs': cnpjs}
+    return render(request, "new-profissional.html", context)
 
 @login_required
-def delete_profissional(request, id):
-    profissional = Profissional.objects.get(id=id)
+def delete_profissional(request, cpf):
+    profissional = Profissional.objects.get(cpf=cpf)
 
     if (request.method == 'POST'):
         profissional.delete()
@@ -191,6 +198,17 @@ def delete_profissional(request, id):
 @login_required
 def index(request):
     return render(request, 'index.html')
+
+@login_required
+def edit_account(request):
+    form = EditAccountForm(request.POST or None, instance=request.user)
+
+    if form.is_valid():
+        form.save()
+        return redirect('index')
+
+    context = {'form': form}
+    return render(request, 'edit_account.html', context)
 
 def my_logout(request):
     logout(request)
