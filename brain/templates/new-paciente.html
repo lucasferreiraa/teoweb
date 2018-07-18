@@ -5,7 +5,7 @@
 <script>
 
 window.onload = function(){
-  document.getElementById('li_novo_profissional').className = "navigation__active";
+  document.getElementById('li_novo_paciente').className = "navigation__active";
 }
 
 </script>
@@ -14,10 +14,10 @@ window.onload = function(){
                 <div class="content__inner">
                     <header class="content__title">
                         <h1>
-                          {% if profissional %}
-                          Atualizar Profissional
+                          {% if paciente %}
+                          Atualizar Paciente
                           {% else %}
-                          Novo Profissional
+                          Novo Paciente
                           {% endif %}
                         </h1>
                     </header>
@@ -43,16 +43,15 @@ window.onload = function(){
       </div>
       {% endfor %}
 
-      {% if profissional %}
-      <button type="button" onclick="atualizar({{cpfs}}, {{cnpjs}}, {{cpf}})" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+      {% if paciente %}
+      <button type="button" onclick="atualizar({{cpfs}}, {{cpf}})" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
           Atualizar
       </button>
       {% else %}
-      <button type="button" onclick="cadastrar({{cpfs}}, {{cnpjs}})" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+      <button type="button" onclick="cadastrar({{cpfs}})" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
           Cadastrar
       </button>
       {% endif %}
-
     </form>
 
   </div>
@@ -64,29 +63,22 @@ window.onload = function(){
         document.form.action = "";
       }
 
-      function cadastrar(cpfs, cnpjs){
+      function cadastrar(cpfs){
 
           cpf = document.getElementById('id_cpf').value;
           nome = document.getElementById('id_nome').value;
-          contato = document.getElementById('id_contato').value;
-          especialidade = document.getElementById('id_especialidade').value;
-          cnpj_clinica = document.getElementById('id_cnpj_clinica').value;
+          historico = document.getElementById('id_historico').value;
 
-          if(cpf != "" && nome != "" && contato != "" && especialidade != "" && cnpj_clinica != ""){
+          if(cpf != "" && nome != "" && historico != ""){
 
               cpf_valido = true;
-              cnpj_valido = true;
 
               if(cpfs.indexOf(cpf) != -1){
                 notify("bottom", "center", "fa fa-check", "info", "animated fadeIn", "animated fadeOut", "Erro - ", "Este CPF já foi cadastrado");
                 cpf_valido = false;
               }
-              if(cnpjs.indexOf(cnpj_clinica) == -1){
-                notify("bottom", "center", "fa fa-check", "info", "animated fadeIn", "animated fadeOut", "Erro - ", "Este CNPJ não está cadastrado");
-                cnpj_valido = false;
-              }
 
-              if(cpf_valido && cnpj_valido)
+              if(cpf_valido)
                 cadastroValido(nome);
             }
 
@@ -96,29 +88,22 @@ window.onload = function(){
           }
       }
 
-      function atualizar(cpfs, cnpjs, c){
+      function atualizar(cpfs, c){
 
           cpf = document.getElementById('id_cpf').value;
           nome = document.getElementById('id_nome').value;
-          contato = document.getElementById('id_contato').value;
-          especialidade = document.getElementById('id_especialidade').value;
-          cnpj_clinica = document.getElementById('id_cnpj_clinica').value;
+          historico = document.getElementById('id_historico').value;
 
-          if(cpf != "" && nome != "" && contato != "" && especialidade != "" && cnpj_clinica != ""){
+          if(cpf != "" && nome != "" && historico != ""){
 
               cpf_valido = true;
-              cnpj_valido = true;
 
               if(cpfs.indexOf(cpf) != -1 && cpf != c){
                 notify("bottom", "center", "fa fa-check", "info", "animated fadeIn", "animated fadeOut", "Erro - ", "Este CPF já foi cadastrado");
                 cpf_valido = false;
               }
-              if(cnpjs.indexOf(cnpj_clinica) == -1){
-                notify("bottom", "center", "fa fa-check", "info", "animated fadeIn", "animated fadeOut", "Erro - ", "Este CNPJ não está cadastrado");
-                cnpj_valido = false;
-              }
 
-              if(cpf_valido && cnpj_valido)
+              if(cpf_valido)
                 atualizacaoValida(nome);
             }
 
@@ -128,10 +113,10 @@ window.onload = function(){
           }
       }
 
-      function cadastroValido(usu){
+      function cadastroValido(pac){
           swal({
               title: 'Sucesso',
-              text: 'Profissional ' + usu + ' cadastrado(a)!',
+              text: 'Paciente ' + pac + ' cadastrado(a)!',
               type: 'success',
               buttonsStyling: false,
               confirmButtonClass: 'btn btn-primary',
@@ -142,10 +127,10 @@ window.onload = function(){
           });
       };
 
-      function atualizacaoValida(pro){
+      function atualizacaoValida(pac){
           swal({
               title: 'Sucesso',
-              text: "Profissional " + pro + ' atualizado!',
+              text: "Paciente " + pac + ' atualizado(a)!',
               type: 'success',
               buttonsStyling: false,
               confirmButtonClass: 'btn btn-primary',

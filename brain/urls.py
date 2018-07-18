@@ -14,8 +14,8 @@ urlpatterns = [
 
     path('cadastrar-paciente', views.create_paciente, name='new-paciente'),
     path('pacientes', views.read_paciente, name='list-paciente'),
-    path('atualizar-paciente/<int:id>/', views.update_paciente, name='update-paciente'),
-    path('excluir-paciente/<int:id>', views.delete_paciente, name='delete-paciente'),
+    path('atualizar-paciente/<cpf>/', views.update_paciente, name='update-paciente'),
+    path('excluir-paciente/<cpf>', views.delete_paciente, name='delete-paciente'),
 
     path('cadastrar-profissional', views.create_profissional, name='new-profissional'),
     path('profissionais', views.read_profissional, name='list-profissional'),

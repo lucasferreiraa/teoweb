@@ -2,7 +2,7 @@
 {% block base %}
 
 </head>
-<body data-ma-theme="blue" onload="deletar('{{profissional.nome}}')">
+<body data-ma-theme="blue" onload="deletar('{{paciente.nome}}')">
 
 <form method="post" action="javascript:void(0)" name="form" id="form">
   {% csrf_token %}
@@ -15,7 +15,7 @@
 function deletar(nome){
   swal({
       title: 'Tem Certeza?',
-      text: "Deseja deletar esse Profissional?",
+      text: "Deseja deletar esse Paciente?",
       type: 'warning',
       buttonsStyling: false,
       showCancelButton: true,
@@ -27,7 +27,7 @@ function deletar(nome){
       if (result.value) {
         swal({
           title: 'Sucesso',
-          text: 'Profissional ' + nome + ' deletado(a)!',
+          text: 'Paciente ' + nome + ' deletado(a)!',
           type: 'success',
           buttonsStyling: false,
           confirmButtonClass: 'btn btn-primary',
@@ -37,7 +37,7 @@ function deletar(nome){
         });
       }
       else{
-        window.location.href = "{% url 'list-profissional' %}";
+        window.location.href = "{% url 'list-paciente' %}";
       }
     })
 }

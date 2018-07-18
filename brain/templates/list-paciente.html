@@ -1,0 +1,44 @@
+{% extends "base_index.html" %}
+{% block index %}
+{% load static %}
+
+<script>
+
+window.onload = function(){
+  document.getElementById('li_pacientes').className = "navigation__active";
+}
+
+</script>
+
+      <section class="content">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Pacientes</h4>
+
+                <table class="table mb-0">
+                    <thead>
+                    <tr>
+                        <th>CPF</th>
+                        <th>Nome</th>
+                        <th>Historico</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for paciente in pacientes %}
+                    <tr>
+                        <td>{{paciente.cpf}}</td>
+                        <td>{{paciente.nome}}</td>
+                        <td>{{paciente.historico}}</td>
+                        <td><a class="nav-link active" href="{% url 'update-paciente' paciente.cpf %}">Atualizar</a></td>
+                        <td><a class="nav-link active" href="{% url 'delete-paciente' paciente.cpf %}">Deletar</a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+{% endblock %}

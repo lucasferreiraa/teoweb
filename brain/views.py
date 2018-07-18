@@ -112,32 +112,39 @@ def delete_admin(request, id):
 @login_required
 def create_paciente(request):
     form = Paciente_Form(request.POST or None)
+    pacientes = list(Paciente.objects.all())
+    cpfs = [p.cpf for p in pacientes]
 
     if (form.is_valid()):
         form.save()
         return redirect("list-paciente")
 
-    return render(request, "new-paciente.html", {'form':form})
+    context = {'form': form, 'cpfs': cpfs}
+    return render(request, "new-paciente.html", context)
 
 @login_required
 def read_paciente(request):
-    paciente = Paciente.objects.all()
-    return render(request, "list-paciente.html")
+    pacientes = Paciente.objects.all()
+    return render(request, "list-paciente.html", {'pacientes': pacientes})
 
 @login_required
-def update_paciente(request, id):
-    paciente = Paciente.objects.get(id=id)
+def update_paciente(request, cpf):
+    paciente = Paciente.objects.get(cpf=cpf)
     form = Paciente_Form(request.POST or None, instance=paciente)
+    pacientes = list(Paciente.objects.all())
+    cpfs = [p.cpf for p in pacientes]
 
     if (form.is_valid()):
+        Paciente.objects.get(cpf=cpf).delete()
         form.save()
         return redirect("list-paciente")
 
-    return render(request, "list-paciente.html", {'paciente':paciente, 'form':form})
+    context = {'paciente': paciente, 'form': form, 'cpfs': cpfs, 'cpf': cpf}
+    return render(request, "new-paciente.html", context)
 
 @login_required
-def delete_paciente(request, id):
-    paciente = Paciente.objects.get(id=id)
+def delete_paciente(request, cpf):
+    paciente = Paciente.objects.get(cpf=cpf)
 
     if (request.method == 'POST'):
         paciente.delete()
@@ -158,7 +165,7 @@ def create_profissional(request):
 
     if form.is_valid():
         form.save()
-        return redirect("index")
+        return redirect("list-profissional")
 
     context = {'form': form, 'cpfs': cpfs, 'cnpjs': cnpjs}
     return render(request, "new-profissional.html", context)

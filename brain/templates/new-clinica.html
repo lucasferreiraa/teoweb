@@ -1,10 +1,18 @@
-{% extends "base_log.html" %}
-{% block base %}
+{% extends "base_index.html" %}
+{% block index %}
+{% load static %}
 
+<script>
 
+window.onload = function(){
+  document.getElementById('li_nova_clinica').className = "navigation__active";
+}
+
+</script>
+
+<!--
 <div class="login">
 
-    <!-- Register -->
     <div class="login__block active" id="l-register">
         <div class="login__block__header palette-Blue bg">
             <h3>TEO</h3>
@@ -56,6 +64,56 @@
         </div>
     </div>
 </div>
+-->
+
+<section class="content">
+                <div class="content__inner">
+                    <header class="content__title">
+                        <h1>
+                          {% if clinica %}
+                          Atualizar Clínica
+                          {% else %}
+                          Nova Clínica
+                          {% endif %}
+                        </h1>
+                    </header>
+                </div>
+<div class="card">
+  <div class="card-body">
+
+      <form method="post" action="javascript:void(0)" name="form" id="form">
+        {% csrf_token %}
+
+      {% for field in form %}
+      <div class="form-group form-group--float">
+
+        {% if field.name == "cnpj" %}
+        <input id="{{field.id_for_label}}" type="text" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}" maxlength="11">
+        <label>{{ field.name|upper }}</label>
+        {% else %}
+        <input id="{{field.id_for_label}}" type="text" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}" >
+        <label>{{field.name|capfirst}}</label>
+        {% endif %}
+
+        <i class="form-group__bar"></i>
+      </div>
+      {% endfor %}
+
+      {% if clinica %}
+      <button type="button" onclick="atualizar({{cnpjs}}, {{cnpj}})" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+          Atualizar
+      </button>
+      {% else %}
+      <button type="button" onclick="cadastrar({{cnpjs}})" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+          Cadastrar
+      </button>
+      {% endif %}
+
+    </form>
+
+  </div>
+</div>
+
 
 <script>
   function cadastrar(cnpjs){

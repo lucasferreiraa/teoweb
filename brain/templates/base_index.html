@@ -364,9 +364,28 @@
                 <li id="li_clinicas"><a href="{% url 'list-clinica' %}"><i class="zmdi zmdi-city-alt zmdi-hc-fw"></i>Clínicas</a></li>
                 <li id="li_novo_profissional"><a href="{% url 'new-profissional' %}"><i class="zmdi zmdi-bike zmdi-hc-fw"></i>Novo Profissional</a></li>
                 <li id="li_profissionais"><a href="{% url 'list-profissional' %}"><i class="zmdi zmdi-hospital zmdi-hc-fw"></i>Profissionais</a></li>
+                <li id="li_novo_paciente"><a href="{% url 'new-paciente' %}"><i class="zmdi zmdi-pizza zmdi-hc-fw"></i>Novo Paciente</a></li>
+                <li id="li_pacientes"><a href="{% url 'list-paciente' %}"><i class="zmdi zmdi-plaster zmdi-hc-fw"></i>Pacientes</a></li>
             </ul>
         </div>
     </aside>
 
 {% block index %}{% endblock %}
+
+<footer class="footer hidden-xs-down">
+      <p>© Material Admin Responsive. All rights reserved.</p>
+
+      <ul class="nav footer__nav">
+          <a class="nav-link" href="">Homepage</a>
+
+          <a class="nav-link" href="">Company</a>
+
+          <a class="nav-link" href="">Support</a>
+
+          <a class="nav-link" href="">News</a>
+
+          <a class="nav-link" href="">Contacts</a>
+      </ul>
+</footer>
+</section>
 {% endblock %}
