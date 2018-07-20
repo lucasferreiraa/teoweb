@@ -19,8 +19,8 @@ urlpatterns = [
 
     path('cadastrar-profissional', views.create_profissional, name='new-profissional'),
     path('profissionais', views.read_profissional, name='list-profissional'),
-    path('atualizar-profissional/<int:id>/', views.update_profissional, name='update-profissional'),
-    path('excluir-paciente/<int:id>/', views.delete_profissional, name='delete-profissional'),
+    path('atualizar-profissional/<cpf>/', views.update_profissional, name='update-profissional'),
+    path('excluir-paciente/<cpf>/', views.delete_profissional, name='delete-profissional'),
 
     path('', views.index, name='index'),
     path('editar_conta/', views.edit_account, name='edit_account'),
