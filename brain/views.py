@@ -31,6 +31,9 @@ def create_clinica(request):
     if not request.user.has_perm('brain.add_clinica'):
         return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
 
+    elif not request.user.is_superuser:
+        return HttpResponse("Não é superuser!") # Karlisson
+
     form = Clinica_Form(request.POST or None)
     clinicas = list(Clinica.objects.all())
     cnpjs = [c.cnpj for c in clinicas]
@@ -51,6 +54,7 @@ def read_clinica(request):
 def update_clinica(request, cnpj):
     if not request.user.has_perm('brain.change_clinica'):
         return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+
 
     clinica = Clinica.objects.get(cnpj=cnpj)
     form = Clinica_Form(request.POST or None, instance=clinica)
@@ -84,6 +88,9 @@ def delete_clinica(request, cnpj):
 def create_admin(request): # Quem cria admin?
     if not request.user.has_perm('brain.add_admin'):
         return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+
+    elif not request.user.is_superuser:
+        return HttpResponse("Não é superuser!") # Karlisson
     
     form = Admin_Form(request.POST or None)
 
@@ -103,6 +110,10 @@ def update_admin(request, id):
     if not request.user.has_perm('brain.change_admin'):
         return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
 
+    elif not request.user.is_superuser:
+        return HttpResponse("Não é superuser!") # Karlisson
+
+
     admin = Admin.objects.get(id=id)
     form = Admin_Form(request.POST or None, instance=admin)
 
@@ -116,6 +127,9 @@ def update_admin(request, id):
 def delete_admin(request, id):
     if not request.user.has_perm('brain.delete_admin'):
         return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+    
+    elif not request.user.is_superuser:
+        return HttpResponse("Não é superuser!") # Karlisson
 
     admin = Admin.objects.get(id=id)
 
