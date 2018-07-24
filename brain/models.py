@@ -1,5 +1,12 @@
 from django.db import models
 
+#class Meta:        # Permissoes customizadas --> aplicando na pasta admin do brain
+#	Permissions = (
+#		("permissao_1", "Descrição da permissão"),
+#		("permissao_2", "Descrição da permissão"),
+#		)
+
+
 class Clinica(models.Model):
 	cnpj = models.CharField(max_length = 45, primary_key = True)
 	nome = models.CharField(max_length = 45)

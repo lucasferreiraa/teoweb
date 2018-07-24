@@ -31,8 +31,6 @@ def create_clinica(request):
     if not request.user.has_perm('brain.add_clinica'):
         return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
 
-    elif not request.user.is_superuser:
-        return HttpResponse("Não é superuser!") # Karlisson
 
     form = Clinica_Form(request.POST or None)
     clinicas = list(Clinica.objects.all())
