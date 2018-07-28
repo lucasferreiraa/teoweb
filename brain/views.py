@@ -29,7 +29,7 @@ se vai ficar visível para o cliente.
 @login_required
 def create_clinica(request):
     if not request.user.has_perm('brain.add_clinica'):
-        return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
 
 
     form = Clinica_Form(request.POST or None)
@@ -51,7 +51,7 @@ def read_clinica(request):
 @login_required
 def update_clinica(request, cnpj):
     if not request.user.has_perm('brain.change_clinica'):
-        return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
 
 
     clinica = Clinica.objects.get(cnpj=cnpj)
@@ -70,7 +70,7 @@ def update_clinica(request, cnpj):
 @login_required
 def delete_clinica(request, cnpj):
     if not request.user.has_perm('brain.delete_clinica'):
-        return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
 
     clinica = Clinica.objects.get(cnpj=cnpj)
 
@@ -85,11 +85,11 @@ def delete_clinica(request, cnpj):
 @login_required
 def create_admin(request): # Quem cria admin?
     if not request.user.has_perm('brain.add_admin'):
-        return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
 
     elif not request.user.is_superuser:
         return HttpResponse("Não é superuser!") # Karlisson
-    
+
     form = Admin_Form(request.POST or None)
 
     if (form.is_valid()):
@@ -125,7 +125,7 @@ def update_admin(request, id):
 def delete_admin(request, id):
     if not request.user.has_perm('brain.delete_admin'):
         return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
-    
+
     elif not request.user.is_superuser:
         return HttpResponse("Não é superuser!") # Karlisson
 
@@ -142,41 +142,49 @@ def delete_admin(request, id):
 @login_required
 def create_paciente(request):
     if not request.user.has_perm('brain.add_paciente'):
-        return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
 
     form = Paciente_Form(request.POST or None)
+    pacientes = list(Paciente.objects.all())
+    cpfs = [p.cpf for p in pacientes]
 
     if (form.is_valid()):
         form.save()
         return redirect("list-paciente")
 
-    return render(request, "new-paciente.html", {'form':form})
+    context = {'form': form, 'cpfs': cpfs}
+    return render(request, "new-paciente.html", context)
 
 @login_required
 def read_paciente(request):
-    paciente = Paciente.objects.all()
-    return render(request, "list-paciente.html")
+    pacientes = Paciente.objects.all()
+    return render(request, "list-paciente.html", {'pacientes': pacientes})
 
 @login_required
-def update_paciente(request, id):
+def update_paciente(request, cpf):
     if not request.user.has_perm('brain.change_paciente'):
-        return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
 
-    paciente = Paciente.objects.get(id=id)
+    paciente = Paciente.objects.get(cpf=cpf)
     form = Paciente_Form(request.POST or None, instance=paciente)
+    pacientes = list(Paciente.objects.all())
+    cpfs = [p.cpf for p in pacientes]
 
     if (form.is_valid()):
+        Paciente.objects.get(cpf=cpf).delete()
         form.save()
         return redirect("list-paciente")
 
-    return render(request, "list-paciente.html", {'paciente':paciente, 'form':form})
+    context = {'paciente':paciente, 'form':form, 'cpfs': cpfs, 'cpf': cpf}
+    return render(request, "new-paciente.html", context)
 
 @login_required
-def delete_paciente(request, id):
+def delete_paciente(request, cpf):
     if not request.user.has_perm('brain.delete_paciente'):
-        return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
 
-    paciente = Paciente.objects.get(id=id)
+    paciente = Paciente.objects.get(cpf=cpf)
+    form = Paciente_Form(request.POST or None, instance=paciente)
 
     if (request.method == 'POST'):
         paciente.delete()
@@ -189,7 +197,7 @@ def delete_paciente(request, id):
 @login_required
 def create_profissional(request):
     if not request.user.has_perm('brain.add_profissional'):
-        return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
 
     form = Profissional_Form(request.POST or None)
     profissionais = list(Profissional.objects.all())
@@ -212,7 +220,7 @@ def read_profissional(request):
 @login_required
 def update_profissional(request, cpf):
     if not request.user.has_perm('brain.change_profissional'):
-        return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
 
     profissional = Profissional.objects.get(cpf=cpf)
     form = Profissional_Form(request.POST or None, instance=profissional)
@@ -232,7 +240,7 @@ def update_profissional(request, cpf):
 @login_required
 def delete_profissional(request, cpf):
     if not request.user.has_perm('brain.delete_profissional'):
-        return HttpResponse("Não Autorizado!") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
 
     profissional = Profissional.objects.get(cpf=cpf)
 
