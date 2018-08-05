@@ -56,7 +56,7 @@ ROOT_URLCONF = 'teoweb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['accounts/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,3 +132,6 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/contas/entrar/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = '/contas/entrar/'
+
+#Email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
