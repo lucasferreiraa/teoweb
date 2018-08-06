@@ -9,4 +9,5 @@ urlpatterns = [
     path('password_reset/done/', password_reset_done, name='password_reset_done'),
     path('reset/<uidb64>/<token>/', password_reset_confirm, name='password_reset_confirm'),
     path('reset/done/', password_reset_complete, name='password_reset_complete'),
+    path('cadastrado/', views.valid_register,  name='valid_register')
 ]

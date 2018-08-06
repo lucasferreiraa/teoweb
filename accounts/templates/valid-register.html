@@ -1,0 +1,25 @@
+{% extends "base-delete.html" %}
+{% block base %}
+
+</head>
+<body data-ma-theme="blue" onload="cadastro()">
+
+<a href="#" id="a"></a>
+
+<script>
+function cadastro(){
+  swal({
+    title: 'Sucesso',
+    text: 'cadastro realizado!',
+    type: 'success',
+    buttonsStyling: false,
+    confirmButtonClass: 'btn btn-primary',
+  }).then(function(){
+      //document.form.action = "";
+      //document.form.submit();
+      window.location.href = "{% url 'login' %}";
+  });
+}
+</script>
+
+{% endblock %}

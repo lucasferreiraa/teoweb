@@ -7,7 +7,10 @@ def register(request):
 
     if form.is_valid():
         form.save()
-        return redirect(settings.LOGIN_URL)
+        return redirect("valid_register")
 
     context = {'form': form}
     return render(request, 'register.html', context)
+
+def valid_register(request):
+    return render(request, 'valid-register.html')
