@@ -24,18 +24,67 @@
         <form method="post" name="form" id="form">
         {% csrf_token %}
         <div class="login__block__body">
-            {{form.non_field_errors}}
 
             {% for field in form %}
-            <div class="form-group form-group--float form-group--centered">
+            <div class="form-group form-group--float">
                 {% if field.name == "password" %}
-                <input id="{{field.id_for_label}}" value="{{field.value|default_if_none:''}}" type="password" class="form-control" name="{{field.name}}">
+                  <input id="{{field.id_for_label}}" placeholder="{{field.name}}" value="{{field.value|default_if_none:''}}" type="password" class="form-control" name="{{field.name}}">
+                  <div id="erroPassword" class="invalid-feedback"></div>
+                  {% if field.errors %}
+                    <script>
+                      password = document.getElementById('id_password');
+                      password.className = "form-control is-invalid"
+
+                      if(password.value == "")
+                        document.getElementById('erroPassword').innerHTML = "este campo é obrigatório";
+
+                      else
+                        document.getElementById('erroPassword').innerHTML = "senha inválida";
+                    </script>
+                  {% elif form.non_field_errors %}
+                    <script>
+                      password = document.getElementById('id_password');
+                      password.className = "form-control is-invalid"
+                      document.getElementById('erroPassword').innerHTML = "informe senha e usuário corretos";
+                    </script>
+                  {% else %}
+                    <script>
+                      password = document.getElementById('id_password');
+
+                      if(password.value != "")
+                        password.className = "form-control is-valid";
+                    </script>
+                  {% endif %}
                 {% else %}
-                <input id="{{field.id_for_label}}" value="{{field.value|default_if_none:''}}" type="text" class="form-control" name="{{field.name}}">
+                  <input id="{{field.id_for_label}}" placeholder="{{field.name}}" value="{{field.value|default_if_none:''}}" type="text" class="form-control" name="{{field.name}}">
+                  <div id="erroUsername" class="invalid-feedback"></div>
+                  {% if field.errors %}
+                    <script>
+                      username = document.getElementById('id_username');
+                      username.className = "form-control is-invalid"
+
+                      if(username.value == "")
+                        document.getElementById('erroUsername').innerHTML = "este campo é obrigatório";
+
+                      else
+                        document.getElementById('erroUsername').innerHTML = "este usuário já existe";
+                    </script>
+                    {% elif form.non_field_errors %}
+                      <script>
+                        username = document.getElementById('id_username');
+                        username.className = "form-control is-invalid"
+                        //document.getElementById('erroPassword').innerHTML = "informe senha e usuário corretos";
+                      </script>
+                    {% else %}
+                    <script>
+                      username = document.getElementById('id_username');
+
+                      if(username.value != "")
+                        username.className = "form-control is-valid";
+                    </script>
+                  {% endif %}
                 {% endif %}
-                <label>{{field.name|capfirst}}</label>
                 <i class="form-group__bar"></i>
-                {{field.errors}}
             </div>
             {% endfor %}
 
