@@ -28,7 +28,7 @@
             {% for field in form %}
             <div class="form-group form-group--float">
                 {% if field.name == "password" %}
-                  <input id="{{field.id_for_label}}" placeholder="{{field.name}}" value="{{field.value|default_if_none:''}}" type="password" class="form-control" name="{{field.name}}">
+                  <input id="{{field.id_for_label}}" placeholder="{{field.label}}" value="{{field.value|default_if_none:''}}" type="password" class="form-control" name="{{field.name}}">
                   <div id="erroPassword" class="invalid-feedback"></div>
                   {% if field.errors %}
                     <script>
@@ -45,7 +45,7 @@
                     <script>
                       password = document.getElementById('id_password');
                       password.className = "form-control is-invalid"
-                      document.getElementById('erroPassword').innerHTML = "informe senha e usuário corretos";
+                      document.getElementById('erroPassword').innerHTML = "informe senha e/ou usuário corretos";
                     </script>
                   {% else %}
                     <script>
@@ -56,7 +56,7 @@
                     </script>
                   {% endif %}
                 {% else %}
-                  <input id="{{field.id_for_label}}" placeholder="{{field.name}}" value="{{field.value|default_if_none:''}}" type="text" class="form-control" name="{{field.name}}">
+                  <input id="{{field.id_for_label}}" placeholder="{{field.label}}" value="{{field.value|default_if_none:''}}" type="text" class="form-control" name="{{field.name}}">
                   <div id="erroUsername" class="invalid-feedback"></div>
                   {% if field.errors %}
                     <script>
@@ -73,7 +73,6 @@
                       <script>
                         username = document.getElementById('id_username');
                         username.className = "form-control is-invalid"
-                        //document.getElementById('erroPassword').innerHTML = "informe senha e usuário corretos";
                       </script>
                     {% else %}
                     <script>

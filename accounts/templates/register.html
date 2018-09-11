@@ -27,7 +27,7 @@
             {% for field in form %}
             <div class="form-group form-group--float">
                 {% if field.name == "password1" %}
-                  <input id="{{field.id_for_label}}" placeholder="{{field.name|capfirst}}" onblur="desfoco()" type="password" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}" maxlength="11">
+                  <input id="{{field.id_for_label}}" placeholder="{{field.label|capfirst}}" onblur="desfoco()" type="password" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}" maxlength="11">
                   <div id="erroPassword1" class="invalid-feedback"></div>
                     {% if field.errors %}
                     <script>
@@ -49,7 +49,7 @@
                     </script>
                     {% endif %}
                 {% elif field.name == "password2" %}
-                  <input id="{{field.id_for_label}}" placeholder="{{field.name|capfirst}}" onblur="desfoco()" type="password" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}" maxlength="11">
+                  <input id="{{field.id_for_label}}" placeholder="{{field.label|capfirst}}" onblur="desfoco()" type="password" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}" maxlength="11">
                   <div id="erroPassword2" class="invalid-feedback"></div>
                     {% if field.errors %}
                     <script>
@@ -71,7 +71,7 @@
                     </script>
                     {% endif %}
                 {% elif  field.name == "username" %}
-                <input id="{{field.id_for_label}}" placeholder="{{field.name|capfirst}}" onblur="desfoco()" type="text" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}">
+                <input id="{{field.id_for_label}}" placeholder="{{field.label|capfirst}}" onblur="desfoco()" type="text" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}">
                 <div id="erroUsername" class="invalid-feedback"></div>
                   {% if field.errors %}
                     <script>
@@ -93,7 +93,7 @@
                     </script>
                   {% endif %}
                 {% else %}
-                <input id="{{field.id_for_label}}" placeholder="{{field.name|capfirst}}" onblur="desfoco()" type="email" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}">
+                <input id="{{field.id_for_label}}" placeholder="{{field.label|capfirst}}" onblur="desfoco()" type="email" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}">
                 <div id="erroEmail" class="invalid-feedback"></div>
                   {% if field.errors %}
                     <script>
