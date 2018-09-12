@@ -5,44 +5,47 @@
 <script>
 
 window.onload = function(){
-  document.getElementById('li_profissionais').className = "navigation__active";
+  document.getElementById('li_profissionais').className = "navigation__sub navigation__sub--active navigation__sub--toggled";
+  document.getElementById('li_listar_profissionais').className = "navigation__active";
 }
 
 </script>
 
-      <section class="content">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Profissionais</h4>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Profissionais</h4>
 
-                <table class="table mb-0">
-                    <thead>
-                    <tr>
-                        <th>CPF</th>
-                        <th>Nome</th>
-                        <th>Contato</th>
-                        <th>Especialidade</th>
-                        <th>Clínica</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for profissional in profissionais %}
-                    <tr>
-                        <td>{{profissional.cpf}}</td>
-                        <td>{{profissional.nome}}</td>
-                        <td>{{profissional.contato}}</td>
-                        <td>{{profissional.especialidade}}</td>
-                        <td>{{profissional.cnpj_clinica}}</td>
-                        <td><a class="nav-link active" href="{% url 'update-profissional' profissional.cpf %}">Atualizar</a></td>
-                        <td><a class="nav-link active" href="{% url 'delete-profissional' profissional.cpf %}">Deletar</a></td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <table class="table mb-0">
+            <thead>
+            <tr>
+                <th>CPF</th>
+                <th>Nome</th>
+                <th>Contato</th>
+                <th>Especialidade</th>
+                <th>Clínica</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for profissional in profissionais %}
+            <tr>
+                <td>{{profissional.cpf}}</td>
+                <td>{{profissional.nome}}</td>
+                <td>{{profissional.contato}}</td>
+                <td>{{profissional.especialidade}}</td>
+                <td>{{profissional.cnpj_clinica}}</td>
+                {% if permissao_atualizar %}
+                <td><a class="nav-link active" href="{% url 'update-profissional' profissional.cpf %}">Atualizar</a></td>
+                {% endif %}
+                {% if permissao_deletar %}
+                <td><a class="nav-link active" href="{% url 'delete-profissional' profissional.cpf %}">Deletar</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-    </section>
 </main>
 
 {% endblock %}

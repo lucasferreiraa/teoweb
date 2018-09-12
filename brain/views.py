@@ -9,10 +9,10 @@ from .models import Admin
 from .models import Paciente
 from .models import Profissional
 
-from .forms import Clinica_Form
+from .forms import Clinica_Form, Clinica_Form_Update
 from .forms import Admin_Form
-from .forms import Paciente_Form
-from .forms import Profissional_Form
+from .forms import Paciente_Form, Paciente_Form_Update
+from .forms import Profissional_Form, Profissional_Form_Update
 from accounts.forms import EditAccountForm
 
 '''
@@ -31,6 +31,7 @@ def create_clinica(request):
     if not request.user.has_perm('brain.add_clinica'):
         return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
 
+    permissao = not request.user.has_perm('brain.add_clinica')
 
     form = Clinica_Form(request.POST or None)
     clinicas = list(Clinica.objects.all())
@@ -40,27 +41,30 @@ def create_clinica(request):
         form.save()
         return redirect("list-clinica")
 
-    context = {'form': form, 'cnpjs': cnpjs}
+    context = {'form': form, 'cnpjs': cnpjs, 'permissao': permissao}
     return render(request, "new-clinica.html", context)
 
 @login_required
 def read_clinica(request):
     clinicas = Clinica.objects.all()
-    return render(request, "list-clinica.html", {'clinicas': clinicas})
+    permissao_atualizar = request.user.has_perm('brain.change_clinica')
+    permissao_deletar = request.user.has_perm('brain.delete_clinica')
+
+    context = {'clinicas': clinicas, 'permissao_atualizar': permissao_atualizar, 'permissao_deletar': permissao_deletar}
+    return render(request, "list-clinica.html", context)
 
 @login_required
 def update_clinica(request, cnpj):
     if not request.user.has_perm('brain.change_clinica'):
-        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html")
 
 
     clinica = Clinica.objects.get(cnpj=cnpj)
-    form = Clinica_Form(request.POST or None, instance=clinica)
+    form = Clinica_Form_Update(request.POST or None, instance=clinica)
     clinicas = list(Clinica.objects.all())
     cnpjs = [c.cnpj for c in clinicas]
 
     if (form.is_valid()):
-        Clinica.objects.get(cnpj=cnpj).delete()
         form.save()
         return redirect("list-clinica")
 
@@ -142,7 +146,7 @@ def delete_admin(request, id):
 @login_required
 def create_paciente(request):
     if not request.user.has_perm('brain.add_paciente'):
-        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html")
 
     form = Paciente_Form(request.POST or None)
     pacientes = list(Paciente.objects.all())
@@ -158,20 +162,23 @@ def create_paciente(request):
 @login_required
 def read_paciente(request):
     pacientes = Paciente.objects.all()
-    return render(request, "list-paciente.html", {'pacientes': pacientes})
+    permissao_atualizar = request.user.has_perm('brain.change_paciente')
+    permissao_deletar = request.user.has_perm('brain.delete_paciente')
+
+    context = {'pacientes': pacientes, 'permissao_atualizar': permissao_atualizar, 'permissao_deletar': permissao_deletar}
+    return render(request, "list-paciente.html", context)
 
 @login_required
 def update_paciente(request, cpf):
     if not request.user.has_perm('brain.change_paciente'):
-        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html")
 
     paciente = Paciente.objects.get(cpf=cpf)
-    form = Paciente_Form(request.POST or None, instance=paciente)
+    form = Paciente_Form_Update(request.POST or None, instance=paciente)
     pacientes = list(Paciente.objects.all())
     cpfs = [p.cpf for p in pacientes]
 
     if (form.is_valid()):
-        Paciente.objects.get(cpf=cpf).delete()
         form.save()
         return redirect("list-paciente")
 
@@ -197,7 +204,7 @@ def delete_paciente(request, cpf):
 @login_required
 def create_profissional(request):
     if not request.user.has_perm('brain.add_profissional'):
-        return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
+        return render(request, "permission-denied.html")
 
     form = Profissional_Form(request.POST or None)
     profissionais = list(Profissional.objects.all())
@@ -215,7 +222,11 @@ def create_profissional(request):
 @login_required
 def read_profissional(request):
     profissionais = Profissional.objects.all()
-    return render(request, "list-profissional.html", {'profissionais': profissionais})
+    permissao_atualizar = request.user.has_perm('brain.change_profissional')
+    permissao_deletar = request.user.has_perm('brain.delete_profissional')
+
+    context = {'profissionais': profissionais, 'permissao_atualizar': permissao_atualizar, 'permissao_deletar': permissao_deletar}
+    return render(request, "list-profissional.html", context)
 
 @login_required
 def update_profissional(request, cpf):
@@ -223,14 +234,13 @@ def update_profissional(request, cpf):
         return render(request, "permission-denied.html") #Karlisson da uma olhada nesse HttpResponse
 
     profissional = Profissional.objects.get(cpf=cpf)
-    form = Profissional_Form(request.POST or None, instance=profissional)
+    form = Profissional_Form_Update(request.POST or None, instance=profissional)
     profissionais = list(Profissional.objects.all())
     clinicas = list(Clinica.objects.all())
     cpfs = [p.cpf for p in profissionais]
     cnpjs = [c.cnpj for c in clinicas]
 
     if (form.is_valid()):
-        Profissional.objects.get(cpf=cpf).delete()
         form.save()
         return redirect("list-profissional")
 
@@ -268,3 +278,6 @@ def edit_account(request):
 def my_logout(request):
     logout(request)
     return redirect(settings.LOGOUT_URL)
+
+def base(request):
+    return render(request, 'base_index.html')

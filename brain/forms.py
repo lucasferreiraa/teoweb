@@ -15,6 +15,15 @@ class Clinica_Form(ModelForm):
             'contato',
         ]
 
+class Clinica_Form_Update(ModelForm):
+    class Meta:
+        model = Clinica
+        fields = [
+            'nome',
+            'endereco',
+            'contato',
+        ]
+
 
 class Admin_Form(ModelForm):
     class Meta:
@@ -36,12 +45,30 @@ class Paciente_Form(ModelForm):
             'historico',
         ]
 
+class Paciente_Form_Update(ModelForm):
+    class Meta:
+        model = Paciente
+        fields = [
+            'nome',
+            'historico',
+        ]
+
 
 class Profissional_Form(ModelForm):
     class Meta:
         model = Profissional
         fields = [
             'cpf',
+            'nome',
+            'contato',
+            'especialidade',
+            'cnpj_clinica',
+        ]
+
+class Profissional_Form_Update(ModelForm):
+    class Meta:
+        model = Profissional
+        fields = [
             'nome',
             'contato',
             'especialidade',

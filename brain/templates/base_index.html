@@ -1,6 +1,7 @@
 {% extends "base_log.html" %}
 {% block base %}
 {% load static %}
+{% load permission_tags %}
 
 <main class="main">
     <div class="page-loader">
@@ -21,7 +22,7 @@
         </div>
 
         <div class="header__logo hidden-sm-down">
-            <h1><a href="index.html">Teo Web</a></h1>
+            <h1><a href="">Teo Web</a></h1>
         </div>
 
         <form class="search">
@@ -340,6 +341,7 @@
         </ul>
     </header>
 
+    <!--
     <aside class="sidebar">
         <div class="scrollbar-inner">
             <div class="user">
@@ -360,13 +362,57 @@
 
             <ul class="navigation">
                 <li id="li_home"><a href="{% url 'index' %}"><i class="zmdi zmdi-home"></i>Home</a></li>
-                <li id="li_nova_clinica" ><a href="{% url 'new-clinica' %}"><i class="zmdi zmdi-city zmdi-hc-fw"></i>Nova Clínica</a></li>
-                <li id="li_clinicas"><a href="{% url 'list-clinica' %}"><i class="zmdi zmdi-city-alt zmdi-hc-fw"></i>Clínicas</a></li>
-                <li id="li_novo_profissional"><a href="{% url 'new-profissional' %}"><i class="zmdi zmdi-bike zmdi-hc-fw"></i>Novo Profissional</a></li>
-                <li id="li_profissionais"><a href="{% url 'list-profissional' %}"><i class="zmdi zmdi-hospital zmdi-hc-fw"></i>Profissionais</a></li>
-                <li id="li_novo_paciente"><a href="{% url 'new-paciente' %}"><i class="zmdi zmdi-pizza zmdi-hc-fw"></i>Novo Paciente</a></li>
-                <li id="li_pacientes"><a href="{% url 'list-paciente' %}"><i class="zmdi zmdi-plaster zmdi-hc-fw"></i>Pacientes</a></li>
+                <li class="navigation__sub" id="li_clinicas">
+                    <a href=""><i class="zmdi zmdi-view-week"></i> Clínicas</a>
+
+                    <ul>
+                        {% if permissao %}
+                        <li id="li_nova_clinica" ><a href="{% url 'new-clinica' %}">Nova Clínica</a></li>
+                        {% endif %}
+                        <li id="li_listar_clinicas"><a href="{% url 'list-clinica' %}">Listar Clínicas</a></li>
+                    </ul>
+                </li>
+                <li class="navigation__sub" id="li_profissionais">
+                    <a href=""><i class="zmdi zmdi-view-week"></i> Profissionais</a>
+
+                    <ul>
+                        <li id="li_novo_profissional" ><a href="{% url 'new-profissional' %}">Novo Profissional</a></li>
+                        <li id="li_listar_profissionais"><a href="{% url 'list-profissional' %}">Listar Profissionais</a></li>
+                    </ul>
+                </li>
+                <li class="navigation__sub" id="li_pacientes">
+                    <a href=""><i class="zmdi zmdi-view-week"></i> Pacientes</a>
+
+                    <ul>
+                        <li id="li_novo_paciente" ><a href="{% url 'new-paciente' %}">Novo Paciente</a></li>
+                        <li id="li_listar_pacientes"><a href="{% url 'list-paciente' %}">Listar Pacientes</a></li>
+                    </ul>
+                </li>
             </ul>
+        </div>
+    </aside>
+    -->
+
+    <aside class="sidebar">
+        <div class="scrollbar-inner">
+            <div class="user">
+                <div class="user__info" data-toggle="dropdown">
+                    <img class="user__img" src="{% static 'demo/img/profile-pics/2.jpg' %}" alt="">
+                    <div>
+                        <div class="user__name">{{user}}</div>
+                        <div class="user__email">{{user.email}}</div>
+                    </div>
+                </div>
+
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'edit_account' %}">Editar Conta</a>
+                    <a class="dropdown-item" href="">Settings</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Sair</a>
+                </div>
+            </div>
+
+            {% permissao user %}
+
         </div>
     </aside>
 

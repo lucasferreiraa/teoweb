@@ -2,6 +2,7 @@
 {% block index %}
 {% load static %}
 
+
 <!-- Vendor styles -->
 <link rel="stylesheet" href="{% static 'vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css' %}">
 <link rel="stylesheet" href="{% static 'vendors/bower_components/animate.css/animate.min.css' %}">
@@ -10,6 +11,7 @@
 
 <!-- App styles -->
 <link rel="stylesheet" href="{% static 'css/app.min.css' %}">
+
 <script>
 
 window.onload = function(){
@@ -551,6 +553,7 @@ window.onload = function(){
 
 </div>
 
+
 <script src="{% static 'vendors/bower_components/jquery/dist/jquery.min.js' %}"></script>
 <script src="{% static 'vendors/bower_components/popper.js/dist/umd/popper.min.js' %}"></script>
 <script src="{% static 'vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js' %}"></script>
@@ -567,7 +570,7 @@ window.onload = function(){
 <script src="{% static 'vendors/bower_components/moment/min/moment.min.js' %}"></script>
 <script src="{% static 'vendors/bower_components/fullcalendar/dist/fullcalendar.min.js' %}"></script>
 
-<!-- App functions and actions -->
-<script src="{% static 'js/app.min.js' %}"></script> -->
-
+<!-- App functions and actions
+<script src="{% static 'js/app.min.js' %}"></script>
+-->
 {% endblock %}

@@ -5,42 +5,45 @@
 <script>
 
 window.onload = function(){
-  document.getElementById('li_clinicas').className = "navigation__active";
+  document.getElementById('li_clinicas').className = "navigation__sub navigation__sub--active navigation__sub--toggled";
+  document.getElementById('li_listar_clinicas').className = "navigation__active";
 }
 
 </script>
 
-      <section class="content">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Clínicas</h4>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Clínicas</h4>
 
-                <table class="table mb-0">
-                    <thead>
-                    <tr>
-                        <th>CNPJ</th>
-                        <th>Nome</th>
-                        <th>Endereço</th>
-                        <th>Contato</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for clinica in clinicas %}
-                    <tr>
-                        <td>{{clinica.cnpj}}</td>
-                        <td>{{clinica.nome}}</td>
-                        <td>{{clinica.endereco}}</td>
-                        <td>{{clinica.contato}}</td>
-                        <td><a class="nav-link active" href="{% url 'update-clinica' clinica.cnpj %}">Atualizar</a></td>
-                        <td><a class="nav-link active" href="{% url 'delete-clinica' clinica.cnpj %}">Deletar</a></td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <table class="table mb-0">
+            <thead>
+            <tr>
+                <th>CNPJ</th>
+                <th>Nome</th>
+                <th>Endereço</th>
+                <th>Contato</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for clinica in clinicas %}
+            <tr>
+                <td>{{clinica.cnpj}}</td>
+                <td>{{clinica.nome}}</td>
+                <td>{{clinica.endereco}}</td>
+                <td>{{clinica.contato}}</td>
+                {% if permissao_atualizar %}
+                <td><a class="nav-link active" href="{% url 'update-clinica' clinica.cnpj %}">Atualizar</a></td>
+                {% endif %}
+                {% if permissao_deletar %}
+                <td><a class="nav-link active" href="{% url 'delete-clinica' clinica.cnpj %}">Deletar</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-    </section>
 </main>
 
 {% endblock %}

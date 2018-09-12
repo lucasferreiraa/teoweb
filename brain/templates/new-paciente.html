@@ -5,23 +5,24 @@
 <script>
 
 window.onload = function(){
+  document.getElementById('li_pacientes').className = "navigation__sub navigation__sub--active navigation__sub--toggled";
   document.getElementById('li_novo_paciente').className = "navigation__active";
 }
 
 </script>
 
-<section class="content">
-                <div class="content__inner">
-                    <header class="content__title">
-                        <h1>
-                          {% if paciente %}
-                          Atualizar Paciente
-                          {% else %}
-                          Novo Paciente
-                          {% endif %}
-                        </h1>
-                    </header>
-                </div>
+<div class="content__inner">
+    <header class="content__title">
+        <h1>
+          {% if paciente %}
+          Atualizar Paciente
+          {% else %}
+          Novo Paciente
+          {% endif %}
+        </h1>
+    </header>
+</div>
+
 <div class="card">
   <div class="card-body">
 
