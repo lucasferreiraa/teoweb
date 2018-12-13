@@ -33,9 +33,25 @@ window.onload = function(){
       {% for field in form %}
 
       <div class="form-group form-group--float">
+        {% if field.name == "cnpj_clinica" %}
+        <div class="col-sm-6">
+          <h3 class="card-body__title">Clínica</h3>
+          <div class="form-group">
+            <div class="select">
+                <select class="form-control" name="{{field.name}}">
+                    <option value="{{field.value}}"></option>
+                    {% for clinica in clinicas %}
+                      <option value="{{clinica.cnpj}}">{{clinica.nome}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+          </div>
+        </div>
+        {% else %}
         <input id="{{field.id_for_label}}" type="text" class="form-control" value="{{field.value|default_if_none:''}}" name="{{field.name}}">
         <label>{{field.label}}</label>
         <i class="form-group__bar"></i>
+        {% endif %}
       </div>
 
       {% endfor %}
