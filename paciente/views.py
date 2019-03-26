@@ -44,3 +44,11 @@ def deletar_paciente(request, cpf):
         return redirect("listar_pacientes")
 
     return render(request, "deletar-paciente.html", {'paciente':paciente})
+
+@login_required
+def perfil_paciente(request, cpf):
+    paciente = Paciente.objects.get(cpf=cpf)
+    
+
+    context = {'paciente':paciente}
+    return render(request, "perfil.html", context)

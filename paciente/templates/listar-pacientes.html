@@ -26,7 +26,7 @@ window.onload = function(){
             {% for paciente in pacientes %}
             <tr>
                 <td>{{paciente.cpf}}</td>
-                <td>{{paciente.nome}}</td>
+                <td><a class="nav-link active" href="{% url 'perfil_paciente' paciente.cpf %}">{{paciente.nome}}</a></td>
                 <td>{{paciente.historico}}</td>
                 {% if permissao_atualizar %}
                 <td><a class="nav-link active" href="{% url 'atualizar_paciente' paciente.cpf %}">Atualizar</a></td>
