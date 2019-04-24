@@ -2,6 +2,8 @@
 {% load static %}
 {% block base %}
 
+<link rel="stylesheet" href={% static "css/app.css" %}>
+
 <script>
 
 window.onload = function(){
@@ -10,6 +12,104 @@ window.onload = function(){
 }
 
 </script>
+
+<style>
+.card {
+  background-color: rgb(116, 232, 238);
+  margin-left: 20px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+  margin-bottom: 2.3rem; }
+  .card:not([class*="border-"]) {
+    border: 0; }
+
+.card--inverse, .card--inverse .card-title {
+  color: #5c6165; }
+
+.card--inverse .card-subtitle {
+  color: #5c6165; }
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: normal;
+  line-height: 140%;
+  margin-top: -0.25rem; }
+  .card-title:last-child {
+    margin-bottom: 0; }
+
+.card-subtitle {
+  color: #5c6165;
+  font-size: 1rem;
+  font-weight: normal;
+  margin-top: -1.7rem;
+  line-height: 1.5; }
+  .card-subtitle:not(:last-child) {
+    margin-bottom: 2rem; }
+
+.card > .actions,
+.card-body > .actions {
+  position: absolute;
+  right: 15px;
+  z-index: 2;
+  top: 18px; }
+
+[class*="card-img"] {
+  width: 100%; }
+
+.card-link {
+  text-transform: uppercase;
+  font-size: 0.98rem;
+  color: #333;
+  display: inline-block;
+  margin-top: 1rem;
+  transition: color 300ms; }
+  .card-link:hover {
+    color: #666666; }
+
+.card-body .card-body {
+  margin-bottom: 0; }
+
+.card-body__title {
+  font-size: 1.15rem;
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: normal; }
+
+.card--fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  padding-top: 72px;
+  overflow: auto; }
+
+.card-header {
+  padding: 1.2rem 2.2rem; }
+
+.widget-past-days__info small {
+font-size: 1rem;
+color: #5c6165; }
+
+.widget-past-days__info h3 {
+  margin: 0;
+  color: #5c6165;
+  font-weight: normal; }
+
+  .widget-profile__list {
+  color: #5c6165; }
+  .widget-profile__list .media {
+    padding: 1rem 2rem; }
+    .widget-profile__list .media:nth-child(odd) {
+      background-color: rgba(255, 255, 255, 0.1); }
+  .widget-profile__list .media-body strong {
+    display: block;
+    font-weight: 500; }
+  .widget-profile__list .media-body small {
+    color: #5c6165;
+    font-size: 0.92rem; }
+
+</style>
 
 <div class="card card--inverse widget-profile">
     <div class="card-body text-center">
